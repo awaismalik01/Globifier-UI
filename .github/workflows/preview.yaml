@@ -1,0 +1,77 @@
+name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - prod
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  Test-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Unit tests
+        run: npm run test:ci
+
+  E2E-Testing:
+    needs: Test-Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v3
+        with:
+          project: ./
+          browser: chrome
+          build: npm run build
+          start: npm run start
+          wait-on: "http://localhost:4200"
+
+      - name: Upload Mochawesome reports
+        uses: actions/upload-artifact@v4.3.6
+        if: success() || failure()
+        with:
+          name: reports
+          path: cypress/reports/html
+
+  Deploy-Preview:
+    needs: E2E-Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
