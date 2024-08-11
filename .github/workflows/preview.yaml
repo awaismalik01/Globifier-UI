@@ -30,15 +30,7 @@ jobs:
         run: npm install
 
       - name: Run Unit tests
-        run: npm run test
-
-      - name: Test Report
-        uses: dorny/test-reporter@v1.9.1
-        if: success() || failure()
-        with:
-          name: JEST Tests
-          path: report/jest-junit.xml
-          reporter: jest-junit
+        run: npm run test:ci
 
   E2E-Testing:
     needs: Test-Build
