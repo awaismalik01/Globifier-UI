@@ -33,9 +33,9 @@ jobs:
         run: npm run test:ci
 
   E2E-Testing:
-    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/automation'
     needs: Test-Build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/automation'
 
     steps:
       - name: Checkout
