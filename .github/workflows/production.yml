@@ -53,8 +53,8 @@ jobs:
         uses: dorny/test-reporter@v1.9.1
         if: success() || failure()
         with:
-          name: index
-          path: cypress/reports/html/index.html
+          name: reports
+          path: cypress/reports/html
 
   Deploy-Production:
     needs: E2E-Testing
