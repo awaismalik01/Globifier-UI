@@ -35,6 +35,7 @@ jobs:
   E2E-Testing:
     needs: Test-Build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/automation'
 
     steps:
       - name: Checkout
