@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --no-watch --code-coverage"
+    "test": "ng test --no-watch --code-coverage",
+    "cy:open": "npx cypress open",
+    "cy:run": "npx cypress run"
   },
   "private": true,
   "dependencies": {
