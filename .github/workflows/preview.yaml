@@ -50,7 +50,7 @@ jobs:
           wait-on: "http://localhost:4200"
 
       - name: Upload Mochawesome reports
-        uses: dorny/test-reporter@v1.9.1
+        uses: actions/upload-artifact@v4.3.6
         if: success() || failure()
         with:
           name: reports
