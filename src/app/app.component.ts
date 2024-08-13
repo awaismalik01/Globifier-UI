@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +12,6 @@ export class AppComponent implements OnInit {
   title = 'globifier-ui';
 
   ngOnInit(): void {
-    console.log(environment.production);
+    console.log(import.meta.env['NG_APP_API_URL']);
   }
 }
