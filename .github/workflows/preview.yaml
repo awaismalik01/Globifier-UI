@@ -52,9 +52,8 @@ jobs:
           wait-on: "http://localhost:4200"
 
       - name: Upload Mochawesome reports
-        if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
+        if: (github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation) && (success() || failure())'
         uses: actions/upload-artifact@v4.3.6
-        if: success() || failure()
         with:
           name: reports
           path: cypress/reports/html
