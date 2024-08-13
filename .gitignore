@@ -29,7 +29,6 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.env
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -39,6 +38,7 @@ testem.log
 /typings
 /cypress/reports
 /cypress/screenshots
+.env
 
 # System files
 .DS_Store
