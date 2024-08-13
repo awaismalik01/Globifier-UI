@@ -23,15 +23,35 @@
 //
 //
 // -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+Cypress.Commands.overwrite(
+  'visit',
+  (originalFn, url: any, options: any = {}, window) => {
+    const isDevUrl = url.includes('dev') || url.includes('localhost');
+
+    if (isDevUrl) {
+      options.headers = {
+        ...options?.headers, // Preserve any existing headers
+        'x-vercel-protection-bypass': 'Y9tgUJtldkeeECCMJgXxkVJwxXQD3Wl5',
+        'x-vercel-set-bypass-cookie': 'true',
+      };
+    }
+
+    return originalFn(url, options, window);
+  }
+);
+
+declare namespace Cypress {
+  interface Chainable {
+    // login(email: string, password: string): Chainable<void>;
+    // drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>;
+    // dismiss(
+    //   subject: string,
+    //   options?: Partial<TypeOptions>
+    // ): Chainable<Element>;
+    visit(
+      originalFn: CommandOriginalFn<any>,
+      url: string,
+      options: Partial<VisitOptions>
+    ): Chainable<Element>;
+  }
+}
