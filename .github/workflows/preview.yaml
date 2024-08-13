@@ -52,7 +52,7 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
-   E2E-Testing:
+  E2E-Testing:
     needs: E2E-Testing
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
