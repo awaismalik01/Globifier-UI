@@ -1,13 +1,5 @@
 {
     "git": {
         "deploymentEnabled": false
-    },
-    "preview": {
-        "buildCommand": "ng build",
-        "outputDirectory": "dist/your-project-name"
-    },
-    "production": {
-        "buildCommand": "ng build --prod",
-        "outputDirectory": "dist/your-project-name"
     }
 }
