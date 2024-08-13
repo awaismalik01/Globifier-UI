@@ -53,7 +53,7 @@ jobs:
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
   E2E-Testing:
-    needs: E2E-Testing
+    needs: Deploy-Preview
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
 
