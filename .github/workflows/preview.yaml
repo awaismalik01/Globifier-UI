@@ -35,13 +35,14 @@ jobs:
   E2E-Testing:
     needs: Test-Build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/automation'
 
     steps:
       - name: Checkout
+        if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
         uses: actions/checkout@v4.1.7
 
       - name: Cypress run
+        if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
         uses: cypress-io/github-action@v3
         with:
           project: ./
@@ -51,11 +52,16 @@ jobs:
           wait-on: "http://localhost:4200"
 
       - name: Upload Mochawesome reports
+        if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
         uses: actions/upload-artifact@v4.3.6
         if: success() || failure()
         with:
           name: reports
           path: cypress/reports/html
+
+      - name: E2E-Testing Skipped
+        if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
+        run: echo "Skipping E2E-Testing."
 
   Deploy-Preview:
     needs: [Test-Build, E2E-Testing]
