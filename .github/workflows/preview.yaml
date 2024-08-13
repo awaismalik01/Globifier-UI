@@ -32,10 +32,30 @@ jobs:
       - name: Run Unit tests
         run: npm run test:ci
 
-  E2E-Testing:
+  Deploy-Preview:
     needs: Test-Build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/automation'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+  E2E-Testing:
+    needs: Deploy-Preview
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
 
     steps:
       - name: Checkout
@@ -56,23 +76,3 @@ jobs:
         with:
           name: reports
           path: cypress/reports/html
-
-  Deploy-Preview:
-    needs: E2E-Testing
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.1.7
-
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

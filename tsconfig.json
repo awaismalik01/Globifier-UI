@@ -26,5 +26,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
