@@ -58,7 +58,7 @@ jobs:
           path: cypress/reports/html
 
   Deploy-Preview:
-    needs: E2E-Testing
+    needs: [Test-Build, E2E-Testing]
     runs-on: ubuntu-latest
 
     steps:
