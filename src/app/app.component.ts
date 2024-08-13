@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'globifier-ui';
 
   ngOnInit(): void {
-    // console.log(environment.production);
-    console.log(process.env['API_URL']);
+    console.log(environment.production);
+    // console.log(process.env['API_URL']);
   }
 }

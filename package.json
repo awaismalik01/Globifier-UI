@@ -34,7 +34,6 @@
     "@angular/compiler-cli": "^18.1.0",
     "@types/jasmine": "~5.1.0",
     "@types/jest": "^29.5.12",
-    "@types/node": "^22.2.0",
     "cypress": "^13.13.2",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
