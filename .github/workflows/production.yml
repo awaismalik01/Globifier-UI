@@ -48,9 +48,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create .env file
+        run: |
+          echo CYPRESS_BASE_URL=${{ secrets.CYPRESS_PROD_BASE_URL }} >> .env
+
       - name: Run Cypress tests
-        env:
-          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_PROD_BASE_URL }}
         run: npx cypress run
 
       - name: Upload Mochawesome reports

@@ -15,44 +15,45 @@ permissions:
   checks: write
 
 jobs:
-  # Test-Build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4.1.7
+  Test-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v4.0.3
-  #       with:
-  #         node-version: "20"
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version: "20"
 
-  #     - name: Install dependencies
-  #       run: npm install
+      - name: Install dependencies
+        run: npm install
 
-  #     - name: Run Unit tests
-  #       run: npm run test:ci
+      - name: Run Unit tests
+        run: npm run test:ci
 
-  # Deploy-Preview:
-  #   needs: Test-Build
-  #   runs-on: ubuntu-latest
+  Deploy-Preview:
+    needs: Test-Build
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4.1.7
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.7
 
-  #     - name: Install Vercel CLI
-  #       run: npm install --global vercel@latest
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
 
-  #     - name: Pull Vercel Environment Information
-  #       run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-  #     - name: Build Project Artifacts
-  #       run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
-  #     - name: Deploy Project Artifacts to Vercel
-  #       run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
   E2E-Testing:
+    needs: Deploy-Preview
     runs-on: ubuntu-latest
 
     steps:
@@ -70,10 +71,6 @@ jobs:
       - name: Create .env file
         run: |
           echo CYPRESS_BASE_URL=${{ secrets.CYPRESS_DEV_BASE_URL }} >> .env
-
-      - name: Echo environment variables
-        run: |
-          echo "CYPRESS_BASE_URL is set to: ${{ secrets.CYPRESS_DEV_BASE_URL }}"
 
       - name: Run Cypress tests
         run: npx cypress run
