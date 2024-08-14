@@ -12,6 +12,6 @@ export class AppComponent implements OnInit {
   title = 'globifier-ui';
 
   ngOnInit(): void {
-    console.log(import.meta.env['NG_APP_API_URL']);
+    console.log(import.meta.env['NG_APP_OLD_API_URL']);
   }
 }

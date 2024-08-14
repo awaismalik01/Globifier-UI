@@ -1,5 +1,5 @@
 describe('template spec', () => {
   it('passes', () => {
-    cy.visit('https://globifier-ui-dev.vercel.app/');
+    cy.visit(Cypress.env('BASE_URL'));
   });
 });
