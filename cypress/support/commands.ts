@@ -26,14 +26,12 @@
 Cypress.Commands.overwrite(
   'visit',
   (originalFn, url: any, options: any = {}, window) => {
-    const isDevUrl =
-      Cypress.env('BASE_URL')?.includes('dev') ||
-      Cypress.env('BASE_URL')?.includes('localhost');
+    const isDevUrl = Cypress.env('BASE_URL')?.includes('dev');
 
     if (isDevUrl) {
       options.headers = {
         ...options?.headers, // Preserve any existing headers
-        'x-vercel-protection-bypass': 'Y9tgUJtldkeeECCMJgXxkVJwxXQD3Wl5',
+        'x-vercel-protection-bypass': Cypress.env('VERCEL_PROTECTION_BYPASS'),
         'x-vercel-set-bypass-cookie': 'true',
       };
     }

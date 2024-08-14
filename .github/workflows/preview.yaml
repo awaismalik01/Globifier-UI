@@ -71,6 +71,7 @@ jobs:
       - name: Create .env file
         run: |
           echo CYPRESS_BASE_URL=${{ secrets.CYPRESS_DEV_BASE_URL }} >> .env
+          echo CYPRESS_VERCEL_PROTECTION_BYPASS=${{ secrets.CYPRESS_VERCEL_PROTECTION_BYPASS }} >> .env
 
       - name: Run Cypress tests
         run: npx cypress run
