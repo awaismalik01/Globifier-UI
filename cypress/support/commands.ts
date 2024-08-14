@@ -26,7 +26,9 @@
 Cypress.Commands.overwrite(
   'visit',
   (originalFn, url: any, options: any = {}, window) => {
-    const isDevUrl = url.includes('dev') || url.includes('localhost');
+    const isDevUrl =
+      Cypress.env('BASE_URL').includes('dev') ||
+      Cypress.env('BASE_URL').includes('localhost');
 
     if (isDevUrl) {
       options.headers = {
