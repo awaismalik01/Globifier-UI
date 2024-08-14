@@ -55,20 +55,26 @@ jobs:
   E2E-Testing:
     needs: Deploy-Preview
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev_baseline' || github.ref == 'refs/heads/feature/automation'
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.7
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.0.3
         with:
-          project: ./
-          browser: chrome
-          build: npm run build
-          start: npm run start
-          wait-on: "http://localhost:4200"
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Create .env file
+        run: |
+          echo CYPRESS_BASE_URL=${{ secrets.CYPRESS_DEV_BASE_URL }} >> .env
+          echo CYPRESS_VERCEL_PROTECTION_BYPASS=${{ secrets.CYPRESS_VERCEL_PROTECTION_BYPASS }} >> .env
+
+      - name: Run Cypress tests
+        run: npx cypress run
 
       - name: Upload Mochawesome reports
         uses: actions/upload-artifact@v4.3.6
