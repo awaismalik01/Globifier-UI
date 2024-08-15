@@ -52,7 +52,7 @@ jobs:
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
 
   E2E-Testing:
-    needs: E2E-Testing
+    needs: Deploy-Production
     runs-on: ubuntu-latest
 
     steps:
