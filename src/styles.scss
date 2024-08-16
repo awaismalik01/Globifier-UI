@@ -1,8 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
+html,
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  flex: 1;
+}
 
 /* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
