@@ -1,10 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BootstrapModule } from './sharedModules/bootstrap.module';
-import { MaterialModule } from './sharedModules/material.module';
-import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { BootstrapModule } from './shared/bootstrap.module';
+import { MaterialModule } from './shared/material.module';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,6 @@ import { FooterComponent } from './components/footer/footer.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     RouterOutlet,
-    CommonModule,
     MaterialModule,
     BootstrapModule,
     NavbarComponent,
